@@ -3,7 +3,7 @@ from __future__ import annotations
 import secrets
 from datetime import datetime, timedelta, timezone
 
-from fastapi import APIRouter, Depends, HTTPException, status
+from fastapi import APIRouter, Depends, HTTPException, Response, status
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 
@@ -56,11 +56,12 @@ def refresh_token(payload: TokenRefreshRequest, db: Session = Depends(get_db)) -
     return TokenPair(access_token=access_token, refresh_token=new_refresh)
 
 
-@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT)
-def logout(payload: TokenRefreshRequest, db: Session = Depends(get_db)) -> None:
+@router.post("/logout", status_code=status.HTTP_204_NO_CONTENT, response_class=Response)
+def logout(payload: TokenRefreshRequest, db: Session = Depends(get_db)) -> Response:
     stored = user_crud.get_valid_refresh_token(db, payload.refresh_token)
     if stored is None:
-        return
+        return Response(status_code=status.HTTP_204_NO_CONTENT)
     stored.revoked = True
     db.add(stored)
     db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
