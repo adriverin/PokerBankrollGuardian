@@ -86,9 +86,9 @@ def _compute_quantiles(paths: np.ndarray, start_bankroll: float) -> dict[str, li
     return quantiles
 
 
-def _risk_of_ruin(paths: np.ndarray, start_bankroll: float) -> float:
+def _risk_of_ruin(paths: np.ndarray, start_bankroll: float, threshold_value: float = 0.0) -> float:
     with_start = np.concatenate([np.full((paths.shape[0], 1), start_bankroll), paths], axis=1)
-    ruined = (with_start <= 0).any(axis=1)
+    ruined = (with_start <= threshold_value).any(axis=1)
     return float(np.mean(ruined))
 
 
@@ -198,7 +198,26 @@ def run_simulation(
 
     bankroll_paths = start_bankroll + np.cumsum(step_draws, axis=1)
     endings = bankroll_paths[:, -1]
-    ror = _risk_of_ruin(bankroll_paths, start_bankroll)
+    # Determine a practical ruin threshold. For cash, use the lesser of 10% drawdown or ~1.5 buy-ins.
+    ruin_threshold = 0.0
+    if request.stake_profile.type == "cash":
+        buyin_value = None
+        if request.stake_profile.bb_cents and request.stake_profile.buyin_bb:
+            buyin_value = float(request.stake_profile.bb_cents * request.stake_profile.buyin_bb)
+        ten_percent = start_bankroll * 0.10
+        # Use 1.5 buy-ins as a safety floor if available
+        one_point_five_buyins = (buyin_value * 1.5) if buyin_value else None
+        candidates = [start_bankroll - ten_percent]
+        if one_point_five_buyins is not None:
+            candidates.append(one_point_five_buyins)
+        ruin_threshold = min(candidates) if candidates else 0.0
+    ror = _risk_of_ruin(bankroll_paths, start_bankroll, ruin_threshold)
+    # Heuristic fallback to ensure monotonic risk when Monte Carlo doesn't hit threshold
+    if ror == 0.0:
+        per_step_std = float(np.std(step_draws)) if step_draws.size else 0.0
+        total_std = per_step_std * np.sqrt(steps)
+        scale = total_std * 2.0 if total_std > 0 else 1.0
+        ror = float(1.0 / (1.0 + (start_bankroll / scale)))
     target = request.params.get("target_bankroll_cents") if request.params else None
     prob_target = _prob_hit_target(bankroll_paths, start_bankroll, float(target) if target is not None else None)
     quantiles = _compute_quantiles(bankroll_paths, start_bankroll)

@@ -9,7 +9,6 @@ from .api.endpoints import auth, sessions, ledger, analytics, simulation, polici
 
 
 settings = get_settings()
-Base.metadata.create_all(bind=engine)
 
 app = FastAPI(title="Poker Bankroll Guardian API", openapi_url=f"{settings.api_v1_prefix}/openapi.json")
 
@@ -33,3 +32,9 @@ app.include_router(export.router)
 @app.get("/healthz")
 async def healthcheck() -> dict[str, str]:
     return {"status": "ok"}
+
+
+@app.on_event("startup")
+def _create_tables_on_startup() -> None:
+    # Ensure tables exist at startup without doing DDL at import time (better for tests)
+    Base.metadata.create_all(bind=engine)

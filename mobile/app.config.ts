@@ -72,6 +72,7 @@ const config: ExpoConfig = {
     tsconfigPaths: true,
     typedRoutes: true
   },
+  plugins: ['expo-router'],
   extra: {
     eas: {
       projectId: '00000000-0000-0000-0000-000000000000'

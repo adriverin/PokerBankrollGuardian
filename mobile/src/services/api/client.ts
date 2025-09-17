@@ -37,11 +37,13 @@ export class ApiClient {
   }
 
   login(payload: { email: string; password: string }) {
+    const body = new URLSearchParams({ username: payload.email, password: payload.password }).toString();
     return this.request<{ access_token: string; refresh_token: string; requires_2fa?: boolean }>(
       '/auth/login',
       {
         method: 'POST',
-        body: JSON.stringify(payload)
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+        body
       }
     );
   }

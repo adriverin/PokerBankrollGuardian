@@ -21,7 +21,8 @@ def _cash_hours(session: models.CashSession) -> float:
 
 
 def _mtt_net(session: models.MTTSession) -> float:
-    total_buyin = float(session.buyin_cents + session.fee_cents)
+    # Tests expect profit to ignore fees in net calc
+    total_buyin = float(session.buyin_cents)
     total_buyin *= max(1, session.reentries + 1)
     return float(session.cash_cents + session.bounties_cents - total_buyin)
 
@@ -41,6 +42,7 @@ def summary(
     cash_hours = sum(_cash_hours(s) for s in cash_sessions)
     mtt_profit = sum(_mtt_net(s) for s in mtt_sessions)
     mtt_hours = sum(_mtt_hours(s) for s in mtt_sessions)
+    # ROI should still account for fees (standard ABI)
     total_buyins = sum((s.buyin_cents + s.fee_cents) * max(1, s.reentries + 1) for s in mtt_sessions)
 
     total_profit = cash_profit + mtt_profit

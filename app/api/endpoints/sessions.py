@@ -4,7 +4,7 @@ import uuid
 from datetime import datetime
 from typing import Optional
 
-from fastapi import APIRouter, Depends, HTTPException, Query, status
+from fastapi import APIRouter, Depends, HTTPException, Query, Response, status
 from sqlalchemy.orm import Session
 
 from ... import models
@@ -76,17 +76,18 @@ def update_cash_session(
     return CashSessionRead.model_validate(session)
 
 
-@router.delete("/cash/{session_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/cash/{session_id}", status_code=status.HTTP_204_NO_CONTENT, response_class=Response)
 def delete_cash_session(
     session_id: uuid.UUID,
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
-) -> None:
+) -> Response:
     session = sessions_crud.get_cash_session(db, current_user.id, session_id)
     if session is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Session not found")
     sessions_crud.delete_cash_session(db, session)
     db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)
 
 
 @router.get("/mtt", response_model=list[MTTSessionRead])
@@ -135,14 +136,15 @@ def update_mtt_session(
     return MTTSessionRead.model_validate(session)
 
 
-@router.delete("/mtt/{session_id}", status_code=status.HTTP_204_NO_CONTENT)
+@router.delete("/mtt/{session_id}", status_code=status.HTTP_204_NO_CONTENT, response_class=Response)
 def delete_mtt_session(
     session_id: uuid.UUID,
     db: Session = Depends(get_db),
     current_user: models.User = Depends(get_current_user),
-) -> None:
+) -> Response:
     session = sessions_crud.get_mtt_session(db, current_user.id, session_id)
     if session is None:
         raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail="Session not found")
     sessions_crud.delete_mtt_session(db, session)
     db.commit()
+    return Response(status_code=status.HTTP_204_NO_CONTENT)

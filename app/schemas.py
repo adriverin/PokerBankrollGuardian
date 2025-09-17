@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 from datetime import datetime
+import uuid
 from enum import Enum
 from typing import Any, Literal, Optional
 
@@ -30,7 +31,7 @@ class UserCreate(UserBase):
 
 
 class UserRead(UserBase):
-    id: str
+    id: uuid.UUID
     currency: str
     timezone: str
     created_at: datetime
@@ -56,7 +57,7 @@ class LedgerEntryCreate(LedgerEntryBase):
 
 
 class LedgerEntryRead(LedgerEntryBase):
-    id: str
+    id: uuid.UUID
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -99,7 +100,7 @@ class CashSessionCreate(CashSessionBase):
 
 
 class CashSessionRead(CashSessionBase):
-    id: str
+    id: uuid.UUID
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -136,7 +137,7 @@ class MTTSessionCreate(MTTSessionBase):
 
 
 class MTTSessionRead(MTTSessionBase):
-    id: str
+    id: uuid.UUID
 
     model_config = ConfigDict(from_attributes=True)
 
@@ -191,7 +192,7 @@ class PolicyCreate(PolicyBase):
 
 
 class PolicyRead(PolicyBase):
-    id: str
+    id: uuid.UUID
 
     model_config = ConfigDict(from_attributes=True)
 

@@ -6,23 +6,63 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "@/components/*": ["src/components/*"],
-      "@/screens/*": ["src/screens/*"],
-      "@/navigation/*": ["src/navigation/*"],
-      "@/store/*": ["src/store/*"],
-      "@/services/*": ["src/services/*"],
-      "@/hooks/*": ["src/hooks/*"],
-      "@/db/*": ["src/db/*"],
-      "@/theme/*": ["src/theme/*"],
-      "@/utils/*": ["src/utils/*"],
-      "@/sync/*": ["src/sync/*"],
-      "@/types": ["src/types"],
-      "@/constants/*": ["src/constants/*"],
-      "@/shared/*": ["src/shared/*"]
+      "@/components/*": [
+        "src/components/*"
+      ],
+      "@/screens/*": [
+        "src/screens/*"
+      ],
+      "@/navigation/*": [
+        "src/navigation/*"
+      ],
+      "@/store/*": [
+        "src/store/*"
+      ],
+      "@/services/*": [
+        "src/services/*"
+      ],
+      "@/hooks/*": [
+        "src/hooks/*"
+      ],
+      "@/db/*": [
+        "src/db/*"
+      ],
+      "@/theme/*": [
+        "src/theme/*"
+      ],
+      "@/utils/*": [
+        "src/utils/*"
+      ],
+      "@/sync/*": [
+        "src/sync/*"
+      ],
+      "@/types": [
+        "src/types"
+      ],
+      "@/constants/*": [
+        "src/constants/*"
+      ],
+      "@/shared/*": [
+        "src/shared/*"
+      ]
     },
-    "types": ["jest", "react", "react-native"],
+    "types": [
+      "jest",
+      "react",
+      "react-native"
+    ],
     "skipLibCheck": true
   },
-  "include": ["App.tsx", "src", "jest.setup.ts", "e2e"],
-  "exclude": ["node_modules", "dist"]
+  "include": [
+    "App.tsx",
+    "src",
+    "jest.setup.ts",
+    "e2e",
+    ".expo/types/**/*.ts",
+    "expo-env.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "dist"
+  ]
 }
