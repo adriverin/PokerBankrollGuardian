@@ -70,7 +70,7 @@ export default function SessionsScreen() {
       <FlatList
         data={data}
         keyExtractor={(item) => item.id}
-        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 120, gap: 12 }}
+        contentContainerStyle={{ paddingHorizontal: 16, paddingBottom: 96, gap: 10 }}
         renderItem={({ item }) => (
           <Card
             title={item.venue ?? 'Unknown venue'}
@@ -103,11 +103,11 @@ export default function SessionsScreen() {
 const styles = StyleSheet.create({
   filterRow: {
     flexDirection: 'row',
-    gap: 12
+    gap: 10
   },
   filterChip: {
-    paddingHorizontal: 16,
-    paddingVertical: 10,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
     borderRadius: 999,
     borderWidth: 1,
     borderColor: 'rgba(148,163,184,0.4)'

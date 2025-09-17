@@ -30,8 +30,8 @@ export default function Card({ title, subtitle, right, children }: CardProps) {
 
 const styles = StyleSheet.create({
   card: {
-    borderRadius: 16,
-    padding: 16,
+    borderRadius: 12,
+    padding: 14,
     shadowColor: '#000',
     shadowOpacity: 0.05,
     shadowRadius: 12,
@@ -41,18 +41,18 @@ const styles = StyleSheet.create({
   header: {
     flexDirection: 'row',
     alignItems: 'center',
-    marginBottom: 12,
-    gap: 12
+    marginBottom: 8,
+    gap: 10
   },
   title: {
-    fontSize: 18,
+    fontSize: 16,
     fontWeight: '600'
   },
   subtitle: {
-    marginTop: 4,
-    fontSize: 14
+    marginTop: 2,
+    fontSize: 13
   },
   content: {
-    gap: 12
+    gap: 10
   }
 });

@@ -55,10 +55,10 @@ const styles = StyleSheet.create({
   },
   container: {
     paddingHorizontal: 16,
-    paddingVertical: 16,
-    gap: 16
+    paddingVertical: 12,
+    gap: 12
   },
   scrollContent: {
-    paddingBottom: 120
+    paddingBottom: 96
   }
 });

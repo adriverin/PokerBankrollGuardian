@@ -27,9 +27,13 @@ function AppTabs() {
         tabBarStyle: {
           backgroundColor: theme.colors.card,
           borderTopColor: theme.colors.border,
-          height: 64,
-          paddingBottom: 10,
-          paddingTop: 10
+          height: 56,
+          paddingBottom: 6,
+          paddingTop: 6
+        },
+        tabBarLabelStyle: {
+          fontSize: 11,
+          marginTop: -2
         },
         tabBarActiveTintColor: theme.colors.primary,
         tabBarInactiveTintColor: theme.colors.muted,
