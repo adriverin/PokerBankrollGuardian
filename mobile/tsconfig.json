@@ -1,0 +1,28 @@
+{
+  "extends": "expo/tsconfig.base",
+  "compilerOptions": {
+    "target": "esnext",
+    "module": "esnext",
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "@/components/*": ["src/components/*"],
+      "@/screens/*": ["src/screens/*"],
+      "@/navigation/*": ["src/navigation/*"],
+      "@/store/*": ["src/store/*"],
+      "@/services/*": ["src/services/*"],
+      "@/hooks/*": ["src/hooks/*"],
+      "@/db/*": ["src/db/*"],
+      "@/theme/*": ["src/theme/*"],
+      "@/utils/*": ["src/utils/*"],
+      "@/sync/*": ["src/sync/*"],
+      "@/types": ["src/types"],
+      "@/constants/*": ["src/constants/*"],
+      "@/shared/*": ["src/shared/*"]
+    },
+    "types": ["jest", "react", "react-native"],
+    "skipLibCheck": true
+  },
+  "include": ["App.tsx", "src", "jest.setup.ts", "e2e"],
+  "exclude": ["node_modules", "dist"]
+}

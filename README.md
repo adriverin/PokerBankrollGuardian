@@ -12,6 +12,7 @@ Poker Bankroll Guardian is a full-stack toolkit for tracking poker bankrolls, an
 ## Repository Layout
 ```
 app/                # FastAPI application package (config, models, services, API routers)
+mobile/             # Expo React Native client (offline-first bankroll tracker & simulator)
 static/, templates/ # Flask dashboard assets and Jinja templates
 web_python.py       # Flask dashboard entry point
 requirements.txt    # Python dependencies
