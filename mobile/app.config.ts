@@ -22,6 +22,7 @@ const config: ExpoConfig = {
     url: 'https://u.expo.dev/placeholder',
     fallbackToCacheTimeout: 0
   },
+  sdkVersion: '54.0.0',
   runtimeVersion: {
     policy: 'sdkVersion'
   },
