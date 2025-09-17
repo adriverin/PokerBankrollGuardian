@@ -1,5 +1,14 @@
 import React, { useEffect } from 'react';
-import { View, Text, TextInput, StyleSheet, Switch, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Switch,
+  Pressable,
+  StyleProp,
+  ViewStyle
+} from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -131,19 +140,21 @@ export default function CashSessionForm({ session, onSaved }: Props) {
           control={form.control}
           name="running"
           render={({ field: { value, onChange } }) => (
-            <Switch value={value} onValueChange={onChange} accessibilityLabel="Running session" />
+            <View style={styles.switchWrapper}>
+              <Switch value={value} onValueChange={onChange} accessibilityLabel="Running session" />
+            </View>
           )}
         />
       </View>
       {renderInput(form, 'venue', 'Venue')}
       {renderInput(form, 'game', 'Game')}
       <View style={styles.inlineInputs}>
-        {renderInput(form, 'sbCents', 'SB (¢)', 'numeric')}
-        {renderInput(form, 'bbCents', 'BB (¢)', 'numeric')}
+        {renderInput(form, 'sbCents', 'SB (¢)', 'numeric', false, styles.inlineField)}
+        {renderInput(form, 'bbCents', 'BB (¢)', 'numeric', false, styles.inlineField)}
       </View>
       <View style={styles.inlineInputs}>
-        {renderInput(form, 'buyinCents', 'Buy-in (¢)', 'numeric')}
-        {renderInput(form, 'cashoutCents', 'Cash-out (¢)', 'numeric')}
+        {renderInput(form, 'buyinCents', 'Buy-in (¢)', 'numeric', false, styles.inlineField)}
+        {renderInput(form, 'cashoutCents', 'Cash-out (¢)', 'numeric', false, styles.inlineField)}
       </View>
       {renderInput(form, 'tipsCents', 'Tips (¢)', 'numeric')}
       {renderInput(form, 'tags', 'Tags (comma separated)')}
@@ -173,14 +184,15 @@ function renderInput(
   name: keyof CashSessionFormValues,
   label: string,
   keyboardType: 'default' | 'numeric' = 'default',
-  multiline = false
+  multiline = false,
+  containerStyle?: StyleProp<ViewStyle>
 ) {
   return (
     <Controller
       control={form.control}
       name={name}
       render={({ field: { onChange, value } }) => (
-        <View style={{ flex: 1 }}>
+        <View style={[styles.field, containerStyle]}>
           <Text style={styles.inputLabel}>{label}</Text>
           <TextInput
             value={value ? String(value) : ''}
@@ -189,6 +201,7 @@ function renderInput(
             keyboardType={keyboardType}
             multiline={multiline}
             accessibilityLabel={label}
+            textAlignVertical={multiline ? 'top' : 'center'}
           />
         </View>
       )}
@@ -237,7 +250,7 @@ function SummaryChip({
 
 const styles = StyleSheet.create({
   container: {
-    gap: 16
+    paddingBottom: 8
   },
   sectionTitle: {
     fontSize: 20,
@@ -246,45 +259,68 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    gap: 16
+    flexWrap: 'wrap',
+    marginBottom: 16
   },
   label: {
     flex: 1,
-    fontSize: 16
+    fontSize: 16,
+    marginRight: 12
   },
   value: {
     fontVariant: ['tabular-nums'],
     fontSize: 18,
-    fontWeight: '600'
+    fontWeight: '600',
+    marginRight: 12
+  },
+  switchWrapper: {
+    marginLeft: 'auto',
+    paddingTop: 4
   },
   inlineInputs: {
     flexDirection: 'row',
-    gap: 12
+    flexWrap: 'wrap',
+    marginHorizontal: -6
+  },
+  inlineField: {
+    flex: 1,
+    minWidth: '48%',
+    marginHorizontal: 6
+  },
+  field: {
+    flex: 1,
+    marginBottom: 16
   },
   inputLabel: {
     fontSize: 13,
-    marginBottom: 4
+    marginBottom: 6
   },
   input: {
     backgroundColor: 'rgba(148, 163, 184, 0.12)',
     borderRadius: 12,
     paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingVertical: 12,
     fontSize: 16
   },
   textarea: {
-    height: 88
+    minHeight: 112
   },
   summaryRow: {
     flexDirection: 'row',
-    gap: 12
+    flexWrap: 'wrap',
+    marginHorizontal: -6,
+    marginTop: 4,
+    marginBottom: 8
   },
   summaryChip: {
     borderRadius: 12,
     borderWidth: 1,
     paddingHorizontal: 16,
     paddingVertical: 12,
-    flex: 1
+    flexGrow: 1,
+    minWidth: '48%',
+    marginHorizontal: 6,
+    marginBottom: 12
   },
   summaryLabel: {
     fontSize: 13,
@@ -297,7 +333,8 @@ const styles = StyleSheet.create({
   submit: {
     borderRadius: 16,
     paddingVertical: 14,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 8
   },
   submitLabel: {
     color: '#fff',

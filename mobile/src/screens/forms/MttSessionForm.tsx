@@ -1,5 +1,13 @@
 import React from 'react';
-import { View, Text, TextInput, StyleSheet, Pressable } from 'react-native';
+import {
+  View,
+  Text,
+  TextInput,
+  StyleSheet,
+  Pressable,
+  StyleProp,
+  ViewStyle
+} from 'react-native';
 import { useForm, Controller } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
@@ -98,10 +106,19 @@ export default function MttSessionForm({ session, onSaved }: Props) {
       <Text style={[styles.title, { color: theme.colors.text }]}>Tournament session</Text>
       {renderInput(form, 'venue', 'Venue')}
       {renderInput(form, 'game', 'Game')}
-      <View style={styles.inline}>{renderInput(form, 'buyinCents', 'Buy-in (¢)', 'numeric')}{renderInput(form, 'feeCents', 'Fee (¢)', 'numeric')}</View>
-      <View style={styles.inline}>{renderInput(form, 'reentries', 'Re-entries', 'numeric')}{renderInput(form, 'cashCents', 'Cash (¢)', 'numeric')}</View>
-      <View style={styles.inline}>{renderInput(form, 'bountiesCents', 'Bounties (¢)', 'numeric')}{renderInput(form, 'fieldSize', 'Field size', 'numeric')}</View>
-      <View style={styles.inline}>{renderInput(form, 'position', 'Finish position', 'numeric')}</View>
+      <View style={styles.inline}>
+        {renderInput(form, 'buyinCents', 'Buy-in (¢)', 'numeric', false, styles.inlineField)}
+        {renderInput(form, 'feeCents', 'Fee (¢)', 'numeric', false, styles.inlineField)}
+      </View>
+      <View style={styles.inline}>
+        {renderInput(form, 'reentries', 'Re-entries', 'numeric', false, styles.inlineField)}
+        {renderInput(form, 'cashCents', 'Cash (¢)', 'numeric', false, styles.inlineField)}
+      </View>
+      <View style={styles.inline}>
+        {renderInput(form, 'bountiesCents', 'Bounties (¢)', 'numeric', false, styles.inlineField)}
+        {renderInput(form, 'fieldSize', 'Field size', 'numeric', false, styles.inlineField)}
+      </View>
+      {renderInput(form, 'position', 'Finish position', 'numeric')}
       {renderInput(form, 'tags', 'Tags (comma separated)')}
       {renderInput(form, 'notes', 'Notes', 'default', true)}
       <Pressable
@@ -125,14 +142,15 @@ function renderInput(
   name: keyof MttSessionFormValues,
   label: string,
   keyboardType: 'default' | 'numeric' = 'default',
-  multiline = false
+  multiline = false,
+  containerStyle?: StyleProp<ViewStyle>
 ) {
   return (
     <Controller
       control={form.control}
       name={name}
       render={({ field: { onChange, value } }) => (
-        <View style={styles.inputWrapper}>
+        <View style={[styles.field, containerStyle]}>
           <Text style={styles.inputLabel}>{label}</Text>
           <TextInput
             value={value ? String(value) : ''}
@@ -141,6 +159,7 @@ function renderInput(
             keyboardType={keyboardType}
             multiline={multiline}
             accessibilityLabel={label}
+            textAlignVertical={multiline ? 'top' : 'center'}
           />
         </View>
       )}
@@ -150,7 +169,7 @@ function renderInput(
 
 const styles = StyleSheet.create({
   container: {
-    gap: 16
+    paddingBottom: 8
   },
   title: {
     fontSize: 20,
@@ -158,29 +177,37 @@ const styles = StyleSheet.create({
   },
   inline: {
     flexDirection: 'row',
-    gap: 12
+    flexWrap: 'wrap',
+    marginHorizontal: -6
   },
-  inputWrapper: {
-    flex: 1
+  inlineField: {
+    flex: 1,
+    minWidth: '48%',
+    marginHorizontal: 6
+  },
+  field: {
+    flex: 1,
+    marginBottom: 16
   },
   inputLabel: {
     fontSize: 13,
-    marginBottom: 4
+    marginBottom: 6
   },
   input: {
     backgroundColor: 'rgba(148, 163, 184, 0.12)',
     borderRadius: 12,
     paddingHorizontal: 12,
-    paddingVertical: 10,
+    paddingVertical: 12,
     fontSize: 16
   },
   textarea: {
-    height: 88
+    minHeight: 112
   },
   submit: {
     borderRadius: 16,
     paddingVertical: 14,
-    alignItems: 'center'
+    alignItems: 'center',
+    marginTop: 8
   },
   submitLabel: {
     color: '#fff',
