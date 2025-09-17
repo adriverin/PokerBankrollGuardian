@@ -171,11 +171,11 @@ function ResultStat({
 const styles = StyleSheet.create({
   segmentRow: {
     flexDirection: 'row',
-    gap: 12
+    gap: 10
   },
   segment: {
     flex: 1,
-    paddingVertical: 12,
+    paddingVertical: 10,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(148,163,184,0.4)',
@@ -184,8 +184,8 @@ const styles = StyleSheet.create({
   formGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 12,
-    marginTop: 16
+    gap: 10,
+    marginTop: 14
   },
   inputWrapper: {
     width: '48%'
@@ -198,24 +198,24 @@ const styles = StyleSheet.create({
     backgroundColor: 'rgba(148,163,184,0.12)',
     borderRadius: 12,
     paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 16
+    paddingVertical: 8,
+    fontSize: 15
   },
   runButton: {
-    marginTop: 16,
+    marginTop: 14,
     borderRadius: 12,
-    paddingVertical: 14,
+    paddingVertical: 12,
     alignItems: 'center'
   },
   runLabel: {
     color: '#fff',
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600'
   },
   resultGrid: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    gap: 16
+    gap: 14
   },
   resultStat: {
     width: '45%'

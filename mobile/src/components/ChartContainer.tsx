@@ -27,9 +27,9 @@ export default function ChartContainer({ title, description, children }: ChartCo
 
 const styles = StyleSheet.create({
   container: {
-    borderRadius: 16,
-    padding: 16,
-    gap: 12
+    borderRadius: 12,
+    padding: 14,
+    gap: 10
   },
   header: {
     gap: 4
@@ -42,6 +42,6 @@ const styles = StyleSheet.create({
     fontSize: 13
   },
   chartArea: {
-    height: 220
+    height: 200
   }
 });

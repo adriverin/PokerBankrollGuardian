@@ -155,14 +155,14 @@ export default function SettingsScreen() {
 const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
-    gap: 12,
+    gap: 10,
     alignItems: 'center'
   },
   rowBetween: {
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    paddingVertical: 8
+    paddingVertical: 6
   },
   inputGroup: {
     flex: 1
@@ -170,24 +170,24 @@ const styles = StyleSheet.create({
   label: {
     fontSize: 13,
     color: '#6b7280',
-    marginBottom: 4
+    marginBottom: 3
   },
   input: {
     borderWidth: 1,
     borderRadius: 12,
     paddingHorizontal: 12,
-    paddingVertical: 10,
-    fontSize: 16
+    paddingVertical: 8,
+    fontSize: 15
   },
   inputSmall: {
     borderWidth: 1,
     borderRadius: 12,
     paddingHorizontal: 12,
-    paddingVertical: 6,
+    paddingVertical: 5,
     width: 80,
     textAlign: 'center'
   },
   exportButton: {
-    paddingVertical: 12
+    paddingVertical: 10
   }
 });

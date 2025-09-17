@@ -41,13 +41,13 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     gap: 8,
-    paddingHorizontal: 20,
-    paddingVertical: 14,
+    paddingHorizontal: 18,
+    paddingVertical: 12,
     elevation: 4
   },
   label: {
     color: '#fff',
     fontWeight: '600',
-    fontSize: 16
+    fontSize: 15
   }
 });

@@ -31,10 +31,10 @@ const styles = StyleSheet.create({
     letterSpacing: 0.6
   },
   value: {
-    fontSize: 24,
+    fontSize: 20,
     fontWeight: '700'
   },
   trend: {
-    fontSize: 14
+    fontSize: 13
   }
 });

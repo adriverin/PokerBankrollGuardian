@@ -47,31 +47,43 @@ export default function AnalyticsScreen() {
         ))}
       </View>
       <Card title="Profit histogram" subtitle="Bucketed by month">
-        <VictoryChart theme={VictoryTheme.material} domainPadding={20} height={220}>
-          <VictoryBar
-            data={histogramData}
-            x="label"
-            y="value"
-            style={{ data: { fill: theme.colors.primary } }}
-          />
-        </VictoryChart>
+        {histogramData.length ? (
+          <VictoryChart theme={VictoryTheme.material} domainPadding={20} height={200}>
+            <VictoryBar
+              data={histogramData}
+              x="label"
+              y="value"
+              style={{ data: { fill: theme.colors.primary } }}
+            />
+          </VictoryChart>
+        ) : (
+          <Text style={[styles.emptyState, { color: theme.colors.muted }]}>Log cash sessions to see distribution.</Text>
+        )}
       </Card>
       <Card title="Game breakdown">
-        <VictoryPie
-          data={gameBreakdown}
-          colorScale={[theme.colors.primary, theme.colors.success, theme.colors.warning, theme.colors.muted]}
-          labels={({ datum }) => `${datum.x}: ${datum.y}`}
-          padAngle={2}
-        />
+        {gameBreakdown.length ? (
+          <VictoryPie
+            data={gameBreakdown}
+            colorScale={[theme.colors.primary, theme.colors.success, theme.colors.warning, theme.colors.muted]}
+            labels={({ datum }) => `${datum.x}: ${datum.y}`}
+            padAngle={2}
+          />
+        ) : (
+          <Text style={[styles.emptyState, { color: theme.colors.muted }]}>No sessions recorded in this window.</Text>
+        )}
       </Card>
       <Card title="Day-of-week performance">
-        <VictoryBar
-          data={dowBreakdown}
-          x="label"
-          y="value"
-          style={{ data: { fill: theme.colors.success } }}
-          height={220}
-        />
+        {dowBreakdown.length ? (
+          <VictoryBar
+            data={dowBreakdown}
+            x="label"
+            y="value"
+            style={{ data: { fill: theme.colors.success } }}
+            height={200}
+          />
+        ) : (
+          <Text style={[styles.emptyState, { color: theme.colors.muted }]}>Track play to unlock weekday trends.</Text>
+        )}
       </Card>
       <Card title="Policy guidance" subtitle="Stake recommendation based on hourly volatility">
         <Text style={{ color: theme.colors.text, fontSize: 16 }}>{recommendation.summary}</Text>
@@ -174,13 +186,17 @@ function buildRecommendation(
 const styles = StyleSheet.create({
   rangeRow: {
     flexDirection: 'row',
-    gap: 12
+    gap: 10
   },
   rangeChip: {
-    paddingHorizontal: 12,
-    paddingVertical: 8,
+    paddingHorizontal: 10,
+    paddingVertical: 6,
     borderRadius: 12,
     borderWidth: 1,
     borderColor: 'rgba(148,163,184,0.4)'
+  },
+  emptyState: {
+    textAlign: 'center',
+    fontSize: 13
   }
 });
