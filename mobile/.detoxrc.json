@@ -1,0 +1,41 @@
+{
+  "$schema": "https://raw.githubusercontent.com/wix/Detox/master/detox.schema.json",
+  "testRunner": "jest",
+  "runnerConfig": "./e2e/jest.config.js",
+  "apps": {
+    "ios.debug": {
+      "type": "ios.simulator",
+      "binaryPath": "bin/ios/Debug/PokerBankrollGuardian.app",
+      "build": "expo run:ios --scheme PokerBankrollGuardian --configuration Debug"
+    },
+    "android.debug": {
+      "type": "android.apk",
+      "binaryPath": "bin/android/Debug/app-debug.apk",
+      "build": "expo run:android --variant debug"
+    }
+  },
+  "devices": {
+    "ios.sim": {
+      "type": "ios.simulator",
+      "device": {
+        "type": "iPhone 15"
+      }
+    },
+    "android.emu": {
+      "type": "android.emulator",
+      "device": {
+        "avdName": "Pixel_7_API_34"
+      }
+    }
+  },
+  "configurations": {
+    "ios": {
+      "device": "ios.sim",
+      "app": "ios.debug"
+    },
+    "android": {
+      "device": "android.emu",
+      "app": "android.debug"
+    }
+  }
+}
