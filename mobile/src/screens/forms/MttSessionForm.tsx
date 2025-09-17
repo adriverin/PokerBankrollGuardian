@@ -178,15 +178,15 @@ const styles = StyleSheet.create({
   inline: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginHorizontal: -6
+    justifyContent: 'space-between',
+    marginHorizontal: 0
   },
   inlineField: {
-    flex: 1,
-    minWidth: '48%',
-    marginHorizontal: 6
+    width: '48%',
+    marginBottom: 12
   },
   field: {
-    flex: 1,
+    width: '100%',
     marginBottom: 16
   },
   inputLabel: {

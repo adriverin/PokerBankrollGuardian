@@ -259,11 +259,12 @@ const styles = StyleSheet.create({
   row: {
     flexDirection: 'row',
     alignItems: 'center',
-    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    flexWrap: 'nowrap',
     marginBottom: 16
   },
   label: {
-    flex: 1,
+    flexShrink: 1,
     fontSize: 16,
     marginRight: 12
   },
@@ -274,21 +275,21 @@ const styles = StyleSheet.create({
     marginRight: 12
   },
   switchWrapper: {
-    marginLeft: 'auto',
+    marginLeft: 12,
     paddingTop: 4
   },
   inlineInputs: {
     flexDirection: 'row',
     flexWrap: 'wrap',
-    marginHorizontal: -6
+    justifyContent: 'space-between',
+    marginHorizontal: 0
   },
   inlineField: {
-    flex: 1,
-    minWidth: '48%',
-    marginHorizontal: 6
+    width: '48%',
+    marginBottom: 12
   },
   field: {
-    flex: 1,
+    width: '100%',
     marginBottom: 16
   },
   inputLabel: {
