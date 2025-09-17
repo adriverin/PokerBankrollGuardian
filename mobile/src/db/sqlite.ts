@@ -2,45 +2,56 @@ import * as SQLite from 'expo-sqlite';
 
 const DB_NAME = 'poker_bankroll_guardian.db';
 
-let database: SQLite.WebSQLDatabase | null = null;
+let database: SQLite.SQLiteDatabase | null = null;
 
-export function getDatabase() {
+export function getDatabase(): SQLite.SQLiteDatabase {
   if (!database) {
-    database = SQLite.openDatabase(DB_NAME);
+    database = SQLite.openDatabaseSync(DB_NAME);
   }
   return database;
 }
 
-export function executeSql<T = SQLite.SQLResultSet>(
-  sql: string,
-  params: SQLite.SQLStatementArg[] = []
-): Promise<SQLite.SQLResultSet> {
-  return new Promise((resolve, reject) => {
+export function executeSql(sql: string, params: SQLite.SQLiteBindParams = []): Promise<any> {
+  return new Promise(async (resolve, reject) => {
     const db = getDatabase();
-    db.transaction((tx) => {
-      tx.executeSql(
-        sql,
-        params,
-        (_, result) => {
-          resolve(result);
-          return true;
-        },
-        (_, error) => {
-          reject(error);
-          return false;
-        }
-      );
-    });
+    const statement = await db.prepareAsync(sql);
+    try {
+      const execResult = await statement.executeAsync(params as any);
+      const rowsArray = await execResult.getAllAsync<any>();
+      const rows = {
+        length: rowsArray.length,
+        item: (index: number) => rowsArray[index]
+      } as any;
+      resolve({ rows });
+    } catch (error) {
+      reject(error);
+    } finally {
+      await statement.finalizeAsync();
+    }
   });
 }
 
-export function runTransaction(handler: (tx: SQLite.SQLTransaction) => void) {
-  return new Promise<void>((resolve, reject) => {
-    const db = getDatabase();
-    db.transaction(
-      (tx) => handler(tx),
-      (error) => reject(error),
-      () => resolve()
-    );
+export async function runTransaction(handler: (tx: SQLite.SQLiteDatabase) => void | Promise<void>) {
+  const db = getDatabase();
+  await db.withExclusiveTransactionAsync(async (txn) => {
+    const txShim = {
+      executeSql: async (sql: string, params: SQLite.SQLiteBindParams = []) => {
+        const statement = await txn.prepareAsync(sql);
+        try {
+          const execResult = await statement.executeAsync(params as any);
+          const rowsArray = await execResult.getAllAsync<any>();
+          return {
+            rows: {
+              length: rowsArray.length,
+              item: (index: number) => rowsArray[index]
+            }
+          } as any;
+        } finally {
+          await statement.finalizeAsync();
+        }
+      }
+    } as any;
+
+    await handler(txShim);
   });
 }

@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 
 from .config import get_settings
 from .database import Base, engine
-from .api.endpoints import auth, sessions, ledger, analytics, simulation, policies, export
+from .api.endpoints import auth, sessions, ledger, analytics, simulation, policies, export, users
 
 
 settings = get_settings()
@@ -27,6 +27,7 @@ app.include_router(analytics.router)
 app.include_router(simulation.router)
 app.include_router(policies.router)
 app.include_router(export.router)
+app.include_router(users.router)
 
 
 @app.get("/healthz")
