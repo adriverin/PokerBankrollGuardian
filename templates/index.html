@@ -7,88 +7,288 @@
 
   <style>
     :root{
-      --bg:#0f172a; --panel:#111827; --panel-2:#0b1220;
-      --text:#e5e7eb; --muted:#94a3b8; --accent:#22d3ee; --accent-2:#60a5fa;
-      --good:#34d399; --bad:#f87171; --warn:#f59e0b; --border:#1f2937; --chip:#0a0f1d;
-      --shadow: 0 10px 30px rgba(0,0,0,.25);
+      --bg:#050b18;
+      --bg-soft:#0b162c;
+      --panel:#111f3a;
+      --panel-2:#0c172d;
+      --panel-border:#1f2f4a;
+      --text:#e2e8f0;
+      --text-strong:#f8fafc;
+      --muted:#94a3b8;
+      --accent:#22d3ee;
+      --accent-2:#60a5fa;
+      --accent-3:#818cf8;
+      --good:#34d399;
+      --bad:#f87171;
+      --warn:#fbbf24;
+      --chip:#0a162d;
+      --badge-bg:rgba(34,211,238,.1);
+      --shadow:0 18px 45px rgba(3,7,18,.55);
     }
-    *{box-sizing:border-box}
+    *{box-sizing:border-box;}
     body{
-      margin:0; padding:0;
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial;
-      background: radial-gradient(1200px 800px at 80% -10%, #0b1220, #0f172a 40%), linear-gradient(180deg, #0b1220, #0f172a 60%);
+      margin:0;
+      font-family:'Inter', 'Segoe UI', system-ui, -apple-system, BlinkMacSystemFont, 'Roboto', 'Helvetica Neue', Arial, sans-serif;
+      line-height:1.6;
+      background:
+        radial-gradient(1200px 800px at 85% -10%, rgba(33,150,243,0.35), transparent 60%),
+        radial-gradient(1000px 900px at -10% -5%, rgba(8,145,178,0.38), transparent 55%),
+        linear-gradient(180deg, var(--bg-soft), var(--bg));
       color:var(--text);
+      min-height:100vh;
+      -webkit-font-smoothing:antialiased;
+      text-rendering:optimizeLegibility;
     }
-    .wrap{ max-width:1100px; margin:40px auto; padding:0 16px; }
-    header{ display:flex; align-items:center; justify-content:space-between; gap:16px; margin-bottom:24px; }
+    .wrap{ max-width:1100px; margin:0 auto; padding:clamp(32px, 6vw, 64px) 18px 48px; }
+    header{
+      display:flex;
+      flex-wrap:wrap;
+      gap:24px;
+      align-items:flex-start;
+      justify-content:space-between;
+      margin-bottom:32px;
+    }
+    .hero-intro{ flex:1 1 520px; min-width:260px; }
     h1{
-      font-size: clamp(22px, 3vw, 32px);
-      letter-spacing:.3px;
-      background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      -webkit-background-clip: text; background-clip: text; color: transparent;
+      margin:0;
+      font-size:clamp(28px, 4vw, 38px);
+      letter-spacing:.4px;
+      background:linear-gradient(90deg, var(--accent), var(--accent-2));
+      -webkit-background-clip:text; background-clip:text; color:transparent;
     }
-    .badge{ display:inline-block; padding:6px 10px; font-size:12px; border-radius:999px; background:#06202d; color:#7dd3fc; border:1px solid #0b2a3a; }
+    .lead{
+      margin:12px 0 0;
+      max-width:520px;
+      color:var(--muted);
+      font-size:15px;
+    }
+    .hero-pills{ display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+    .pill{
+      display:inline-flex;
+      align-items:center;
+      padding:6px 12px;
+      font-size:12px;
+      letter-spacing:.3px;
+      text-transform:uppercase;
+      font-weight:600;
+      border-radius:999px;
+      background:rgba(15,118,110,0.12);
+      border:1px solid rgba(34,211,238,0.25);
+      color:var(--accent);
+    }
+    .hero-card{
+      flex:0 1 280px;
+      background:linear-gradient(145deg, rgba(34,211,238,0.18), rgba(129,140,248,0.14));
+      border:1px solid rgba(34,211,238,0.35);
+      border-radius:18px;
+      padding:20px 22px;
+      box-shadow:0 20px 45px rgba(14,116,144,0.35);
+    }
+    .hero-card-title{
+      font-size:13px;
+      letter-spacing:1.6px;
+      text-transform:uppercase;
+      color:var(--accent-2);
+      margin-bottom:8px;
+      font-weight:700;
+    }
+    .hero-card p{ margin:0; color:var(--text-strong); font-size:15px; line-height:1.5; }
+    .badge{
+      display:inline-flex;
+      align-items:center;
+      gap:6px;
+      padding:6px 12px;
+      font-size:12px;
+      border-radius:999px;
+      background:var(--badge-bg);
+      color:var(--accent);
+      border:1px solid rgba(34,211,238,0.35);
+    }
     .card{
-      background: linear-gradient(180deg, var(--panel), var(--panel-2));
-      border:1px solid var(--border); border-radius:14px; box-shadow: var(--shadow); padding:22px;
+      position:relative;
+      background:linear-gradient(180deg, rgba(17,30,52,0.9), rgba(9,16,31,0.92));
+      border:1px solid rgba(31,47,74,0.85);
+      border-radius:16px;
+      padding:28px;
+      box-shadow:var(--shadow);
+      overflow:hidden;
+    }
+    .card::before{
+      content:"";
+      position:absolute;
+      inset:0;
+      pointer-events:none;
+      background:linear-gradient(120deg, rgba(34,211,238,0.08), transparent 60%);
+      opacity:.6;
+    }
+    .card > *{ position:relative; }
+    .card-hero{ border:1px solid rgba(96,165,250,0.45); }
+    .card-header{ margin-bottom:22px; }
+    .card-header h2, .card-header h3{
+      margin:6px 0 10px;
+      font-size:clamp(18px, 2.6vw, 24px);
+      color:var(--text-strong);
+      letter-spacing:.2px;
+    }
+    .card-header p{ margin:0; font-size:14px; color:var(--muted); max-width:640px; }
+    .card-subtitle{ margin:0 0 8px 0; font-size:15px; font-weight:600; color:var(--text-strong); }
+    .card-eyebrow{
+      display:inline-flex;
+      align-items:center;
+      font-size:11px;
+      text-transform:uppercase;
+      letter-spacing:1.4px;
+      color:var(--accent-2);
+      background:rgba(96,165,250,0.12);
+      border:1px solid rgba(96,165,250,0.3);
+      border-radius:999px;
+      padding:4px 10px;
     }
     .grid{ display:grid; gap:18px; grid-template-columns: repeat(12, 1fr); }
     .grid-2col > *{ grid-column: span 12; }
     @media (min-width: 880px){ .grid-2col > *{ grid-column: span 6; } }
-
-    label{ display:block; margin:8px 0 6px; color:var(--muted); font-size:14px; }
-    input, textarea, select, button{
-      width:100%; appearance:none; border:1px solid var(--border);
-      background:#0b1020; color:var(--text);
-      border-radius:10px; padding:10px 12px; font-size:15px;
-      transition: box-shadow .2s ease, border-color .2s ease;
+    .form-grid{ gap:20px; }
+    .full-row{ grid-column: span 12; }
+    .actions{ display:flex; justify-content:flex-end; gap:12px; }
+    label{
+      display:block;
+      margin-bottom:6px;
+      font-weight:600;
+      color:var(--muted);
+      font-size:14px;
+      letter-spacing:.2px;
     }
-    textarea{ min-height: 120px; line-height:1.35; }
-    input:focus, textarea:focus{ outline:none; border-color:var(--accent); box-shadow:0 0 0 3px rgba(34,211,238,0.2); }
-    .btn{ cursor:pointer; border:none; font-weight:600; letter-spacing:.2px;
+    input, textarea, select{
+      width:100%;
+      appearance:none;
+      border:1px solid rgba(31,47,74,0.8);
+      background:rgba(8,15,28,0.9);
+      color:var(--text);
+      border-radius:12px;
+      padding:11px 14px;
+      font-size:15px;
+      transition:border-color .2s ease, box-shadow .2s ease, transform .2s ease;
+    }
+    textarea{ min-height:130px; resize:vertical; line-height:1.5; }
+    select{ cursor:pointer; }
+    input:focus, textarea:focus, select:focus{
+      outline:none;
+      border-color:var(--accent);
+      box-shadow:0 0 0 3px rgba(34,211,238,0.25);
+    }
+    input::placeholder, textarea::placeholder{ color:rgba(148,163,184,0.7); }
+    .checkbox-row{ display:flex; align-items:center; gap:10px; font-weight:600; color:var(--text); }
+    .checkbox-row input[type="checkbox"]{ width:18px; height:18px; accent-color:var(--accent); }
+    .inline-range{ display:flex; align-items:center; gap:12px; }
+    .inline-range span{ font-weight:600; }
+    .btn{
+      cursor:pointer; border:none; font-weight:700; letter-spacing:.3px;
       background: linear-gradient(90deg, var(--accent), var(--accent-2));
-      color:#0b1020; padding:12px 16px; border-radius:12px;
-      box-shadow:0 6px 20px rgba(96,165,250,.25);
+      color:#020617; padding:13px 18px; border-radius:14px;
+      box-shadow:0 16px 35px rgba(96,165,250,0.3);
+      transition:transform .2s ease, box-shadow .2s ease, filter .2s ease;
     }
-    .btn:hover{ filter: brightness(1.06); }
-    .section-title{ margin:22px 0 10px; font-weight:700; color:#cbd5e1; letter-spacing:.3px; }
+    .btn:hover{ filter: brightness(1.08); transform:translateY(-1px); box-shadow:0 20px 40px rgba(96,165,250,0.35); }
+    .btn:focus-visible{ outline:none; box-shadow:0 0 0 4px rgba(34,211,238,0.35); }
+    .section-title{
+      margin:32px 0 14px;
+      font-weight:700;
+      color:var(--text-strong);
+      letter-spacing:.4px;
+      font-size:clamp(18px, 2.4vw, 22px);
+      display:flex;
+      align-items:center;
+      gap:12px;
+    }
     .muted{ color:var(--muted); }
-    .error{ color:var(--bad); font-weight:600; margin-top:12px; }
-    footer{ margin:36px 0 10px; color:var(--muted); font-size:13px; text-align:center; }
-
-    .plots{ display:grid; gap:18px; grid-template-columns: repeat(12, 1fr); }
-    .plots > figure{ grid-column: span 12; background:var(--chip); border:1px solid var(--border); border-radius:12px; padding:14px; }
-    .plots figcaption{ margin:8px 0 8px; color:var(--muted); font-size:14px; }
-    img{ width:100%; height:auto; border-radius:8px; display:block; }
-
-    table{ width:100%; border-collapse: collapse; overflow:hidden; border-radius:12px; border:1px solid var(--border); background:var(--chip); }
-    th, td{ padding:10px 12px; border-bottom:1px solid var(--border); font-size:14px; }
-    th{ text-align:left; color:#cbd5e1; background:#0c1324; }
+    .hint{ margin-top:6px; font-size:13px; color:rgba(148,163,184,0.75); }
+    .error{ color:var(--bad); font-weight:600; margin-top:16px; }
+    footer{ margin:48px 0 10px; color:rgba(148,163,184,0.75); font-size:13px; text-align:center; }
+    .plots{ display:grid; gap:18px; grid-template-columns: repeat(12, 1fr); margin-top:20px; }
+    .plots > figure{
+      grid-column: span 12;
+      background:var(--chip);
+      border:1px solid rgba(31,47,74,0.7);
+      border-radius:14px;
+      padding:16px;
+      box-shadow:0 10px 30px rgba(2,6,23,0.35);
+    }
+    .plots figcaption{ margin:6px 0 12px; color:var(--muted); font-size:14px; }
+    img{ width:100%; height:auto; border-radius:10px; display:block; }
+    table{
+      width:100%;
+      border-collapse: collapse;
+      overflow:hidden;
+      border-radius:14px;
+      border:1px solid rgba(148,163,184,0.15);
+      background:rgba(9,16,31,0.85);
+      box-shadow:0 12px 28px rgba(3,7,18,0.35);
+    }
+    th, td{ padding:12px 14px; border-bottom:1px solid rgba(148,163,184,0.12); font-size:14px; }
+    th{
+      text-align:left;
+      color:var(--text-strong);
+      background:rgba(12,30,54,0.9);
+      text-transform:uppercase;
+      letter-spacing:.4px;
+      font-size:12px;
+    }
+    tr:nth-child(even) td{ background:rgba(15,24,45,0.4); }
     tr:last-child td{ border-bottom:none; }
-
-    .metrics-grid{ display:grid; gap:18px; grid-template-columns: repeat(12, 1fr); }
+    .metrics-grid{ display:grid; gap:20px; grid-template-columns: repeat(12, 1fr); }
     .metrics-grid > .card{ grid-column: span 12; }
-    @media (min-width: 1000px){ .metrics-grid > .card{ grid-column: span 4; } }
-
+    @media (min-width: 1024px){ .metrics-grid > .card{ grid-column: span 4; } }
     .alert{
-      border-radius:12px; padding:12px 14px; margin-bottom:10px; border:1px solid var(--border); background:#0a0f1d;
+      border-radius:14px;
+      padding:14px 16px;
+      margin-bottom:12px;
+      border:1px solid rgba(148,163,184,0.2);
+      background:rgba(12,27,48,0.85);
+      box-shadow:0 10px 26px rgba(2,6,23,0.3);
     }
     .alert.success{ border-left:4px solid var(--good); }
     .alert.warning{ border-left:4px solid var(--warn); }
     .alert.danger{ border-left:4px solid var(--bad); }
-    .alert h4{ margin:0 0 6px 0; font-size:15px; }
+    .alert h4{ margin:0 0 6px 0; font-size:15px; color:var(--text-strong); }
+    .top-gap{ margin-top:14px; }
+    .top-gap-sm{ margin-top:12px; }
+    .top-gap-lg{ margin-top:20px; }
+    @media (max-width: 720px){
+      .card{ padding:24px; }
+      .hero-card{ flex-basis:100%; }
+      header{ margin-bottom:28px; }
+    }
   </style>
 </head>
 <body>
   <div class="wrap">
     <header>
-      <h1>🎲 Poker Cash-Game Simulator</h1>
-      <div class="muted">Normal • Student-t • Bootstrap • Guardian • Scenario Lab • Alerts</div>
+      <div class="hero-intro">
+        <h1>🎲 Poker Cash-Game Simulator</h1>
+        <p class="lead">Bring clarity to your bankroll decisions with vivid simulations and protective guardrails.</p>
+        <div class="hero-pills">
+          <span class="pill">Normal</span>
+          <span class="pill">Student-t</span>
+          <span class="pill">Bootstrap</span>
+          <span class="pill">Guardian</span>
+          <span class="pill">Scenario Lab</span>
+          <span class="pill">Alerts</span>
+        </div>
+      </div>
+      <div class="hero-card">
+        <div class="hero-card-title">Monte Carlo Engine</div>
+        <p>Stress-test volatility, drawdowns, and risk of ruin in seconds.</p>
+      </div>
     </header>
 
     <!-- ================== SIMULATOR ================== -->
-    <div class="card">
-      <form method="POST" class="grid grid-2col" autocomplete="off">
+    <div class="card card-hero">
+      <div class="card-header">
+        <div class="card-eyebrow">Session Simulator</div>
+        <h2>Run disciplined bankroll projections</h2>
+        <p class="muted">Tune the historical sessions, rerun Monte Carlo paths, and see how swings compound over time.</p>
+      </div>
+      <form method="POST" class="grid grid-2col form-grid" autocomplete="off">
         <input type="hidden" name="form_id" value="sim" />
         <div>
           <label for="num_samples">Sessions to simulate</label>
@@ -102,11 +302,11 @@
           <label for="start_bankroll">Starting bankroll (currency or bb)</label>
           <input type="number" step="0.01" id="start_bankroll" name="start_bankroll" value="5000" required>
         </div>
-        <div style="grid-column: span 12;">
+        <div class="full-row">
           <label for="session_results">Session results (comma or space-separated)</label>
           <textarea id="session_results" name="session_results">{{ default_session_text }}</textarea>
         </div>
-        <div style="grid-column: span 12; display:flex; justify-content:flex-end;">
+        <div class="full-row actions">
           <button class="btn" type="submit">Run Simulation</button>
         </div>
       </form>
@@ -125,7 +325,7 @@
           </tbody>
         </table>
         {% if plot_url_stat %}
-          <div class="plots" style="margin-top:16px;">
+          <div class="plots top-gap-lg">
             <figure>
               <figcaption>Historical Cumulative PnL</figcaption>
               <img src="{{ url_for('static', filename=plot_url_stat.split('static/')[-1]) }}?v={{ cb }}" alt="Historical">
@@ -139,17 +339,17 @@
       <h2 class="section-title">Monte Carlo Metrics</h2>
       <div class="metrics-grid">
         <div class="card">
-          <h3 class="muted" style="margin-top:0;">Normal Distribution</h3>
+          <h3 class="card-subtitle muted">Normal Distribution</h3>
           <table><thead><tr><th>Metric</th><th>Value</th></tr></thead>
           <tbody>{% for k, v in metrics_normal.items() %}<tr><td>{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table>
         </div>
         <div class="card">
-          <h3 class="muted" style="margin-top:0;">Student-t Distribution</h3>
+          <h3 class="card-subtitle muted">Student-t Distribution</h3>
           <table><thead><tr><th>Metric</th><th>Value</th></tr></thead>
           <tbody>{% for k, v in metrics_t.items() %}<tr><td>{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table>
         </div>
         <div class="card">
-          <h3 class="muted" style="margin-top:0;">Bootstrap Resampling</h3>
+          <h3 class="card-subtitle muted">Bootstrap Resampling</h3>
           <table><thead><tr><th>Metric</th><th>Value</th></tr></thead>
           <tbody>{% for k, v in metrics_boot.items() %}<tr><td>{{ k }}</td><td>{{ v }}</td></tr>{% endfor %}</tbody></table>
         </div>
@@ -179,7 +379,12 @@
     <!-- ================== BANKROLL GUARDIAN (LIVE) ================== -->
     <h2 class="section-title">Bankroll Guardian <span class="badge">Live</span></h2>
     <div class="card">
-      <form method="POST" class="grid grid-2col" autocomplete="off">
+      <div class="card-header">
+        <div class="card-eyebrow">Bankroll Guardian</div>
+        <h3>Protect your current stake with guardrails</h3>
+        <p class="muted">Let the simulator audit recommended stakes and stop-loss policies before you sit down.</p>
+      </div>
+      <form method="POST" class="grid grid-2col form-grid" autocomplete="off">
         <input type="hidden" name="form_id" value="guardian" />
         <div>
           <label>Target Risk of Ruin (max)</label>
@@ -203,26 +408,26 @@
           <input type="number" step="0.01" name="gr_current_bb" value="1.00" required>
           <div class="hint">If history is NL50 (bb=$0.50), enter 0.5; NL100 → 1.0, etc.</div>
         </div>
-        <div>
+        <div class="full-row">
           <label>Search range for BB value</label>
-          <div style="display:flex; gap:10px; align-items:center;">
+          <div class="inline-range">
             <input type="number" step="0.01" name="gr_search_min_bb" value="0.25" required>
             <span class="muted">to</span>
             <input type="number" step="0.01" name="gr_search_max_bb" value="3.00" required>
           </div>
         </div>
-        <div style="grid-column: span 12; display:flex; justify-content:flex-end;">
+        <div class="full-row actions">
           <button class="btn" type="submit">Recommend Stake</button>
         </div>
-        <div style="grid-column: span 12;">
+        <div class="full-row">
           <label for="session_results">Session results (reuse same history)</label>
           <textarea id="session_results" name="session_results">{{ default_session_text }}</textarea>
         </div>
       </form>
 
       {% if guardian_results %}
-        <div class="grid" style="margin-top:16px;">
-          <div style="grid-column: span 12;">
+        <div class="grid top-gap-lg">
+          <div class="full-row">
             <table>
               <thead><tr><th>Metric</th><th>Value</th></tr></thead>
               <tbody>
@@ -237,8 +442,8 @@
             </table>
           </div>
 
-          <div style="grid-column: span 12; margin-top:14px;">
-            <h3 class="muted" style="margin:0 0 8px 0;">Metrics at Recommended Stake</h3>
+          <div class="full-row top-gap">
+            <h3 class="card-subtitle muted">Metrics at Recommended Stake</h3>
             <table>
               <thead><tr><th>Metric</th><th>Value</th></tr></thead>
               <tbody>
@@ -255,7 +460,12 @@
     <!-- ================== SCENARIO LAB (LIVE) ================== -->
     <h2 class="section-title">Scenario Lab <span class="badge">Live</span></h2>
     <div class="card">
-      <form method="POST" class="grid grid-2col" autocomplete="off">
+      <div class="card-header">
+        <div class="card-eyebrow">Scenario Lab</div>
+        <h3>Explore new games and winrate shifts</h3>
+        <p class="muted">Model different stakes, hand volumes, and volatility tweaks before you move up or shot take.</p>
+      </div>
+      <form method="POST" class="grid grid-2col form-grid" autocomplete="off">
         <input type="hidden" name="form_id" value="scenario" />
         <div>
           <label>Starting bankroll (currency)</label>
@@ -299,20 +509,20 @@
           </select>
         </div>
 
-        <div style="grid-column: span 12;">
+        <div class="full-row">
           <label for="session_results">Session results (reuse same history)</label>
           <textarea id="session_results" name="session_results">{{ default_session_text }}</textarea>
         </div>
 
-        <div style="grid-column: span 12; display:flex; justify-content:flex-end;">
+        <div class="full-row actions">
           <button class="btn" type="submit">Run Scenario</button>
         </div>
       </form>
 
       {% if scenario_results %}
-        <div class="grid" style="margin-top:16px;">
-          <div style="grid-column: span 12;">
-            <h3 class="muted" style="margin:0 0 8px 0;">Scenario Inputs</h3>
+        <div class="grid top-gap-lg">
+          <div class="full-row">
+            <h3 class="card-subtitle muted">Scenario Inputs</h3>
             <table>
               <thead><tr><th>Input</th><th>Value</th></tr></thead>
               <tbody>
@@ -323,8 +533,8 @@
             </table>
           </div>
 
-          <div style="grid-column: span 12; margin-top:14px;">
-            <h3 class="muted" style="margin:0 0 8px 0;">Scenario Metrics</h3>
+          <div class="full-row top-gap">
+            <h3 class="card-subtitle muted">Scenario Metrics</h3>
             <table>
               <thead><tr><th>Metric</th><th>Value</th></tr></thead>
               <tbody>
@@ -336,7 +546,7 @@
           </div>
 
           {% if plot_url_scenario %}
-            <div class="plots" style="grid-column: span 12; margin-top:16px;">
+            <div class="plots full-row top-gap-lg">
               <figure>
                 <figcaption>Scenario Lab – Cumulative Bankroll</figcaption>
                 <img src="{{ url_for('static', filename=plot_url_scenario.split('static/')[-1]) }}?v={{ cb }}" alt="Scenario MC">
@@ -350,6 +560,11 @@
     <!-- ================== ALERTS & NOTIFICATIONS (BETA) ================== -->
     <h2 class="section-title">Alerts & Notifications <span class="badge">Beta</span></h2>
     <div class="card">
+      <div class="card-header">
+        <div class="card-eyebrow">Alerts & Automation</div>
+        <h3>Stay ahead of drawdowns and policy breaches</h3>
+        <p class="muted">Feed in live session data and instantly check it against your guardrails and latest Guardian output.</p>
+      </div>
       <!-- Guardian data payload for JS auto-fill -->
       <div id="guardian-data"
            data-available="{{ 'yes' if guardian_results else 'no' }}"
@@ -362,7 +577,7 @@
            {% endif %}>
       </div>
 
-      <form method="POST" class="grid grid-2col" autocomplete="off">
+      <form method="POST" class="grid grid-2col form-grid" autocomplete="off">
         <input type="hidden" name="form_id" value="alerts" />
 
         <!-- Policy / thresholds -->
@@ -390,14 +605,14 @@
           <input type="number" step="0.01" name="al_week_pnl" placeholder="e.g., -800">
           <div class="hint">Optional if you don’t provide the list below.</div>
         </div>
-        <div style="grid-column: span 12;">
+        <div class="full-row">
           <label>Last 7 sessions list (optional, overrides quick entry)</label>
           <textarea name="al_last7_list" placeholder="-200, 350, -150, 80, -600, 90, -50"></textarea>
         </div>
 
         <!-- RoR check: Add Use Guardian toggle -->
-        <div style="grid-column: span 12;">
-          <label style="display:flex; gap:10px; align-items:center;">
+        <div class="full-row">
+          <label class="checkbox-row">
             <input type="checkbox" id="al_use_guardian" {% if not guardian_results %}disabled{% endif %}>
             Use Guardian recommendation (prefill stake, horizon, paths, start BR)
           </label>
@@ -428,18 +643,18 @@
           <div class="hint">Stake you want to play now (currency per 1bb).</div>
         </div>
 
-        <div style="grid-column: span 12;">
+        <div class="full-row">
           <label for="session_results">Session results (reuse same history)</label>
           <textarea id="session_results" name="session_results">{{ default_session_text }}</textarea>
         </div>
 
-        <div style="grid-column: span 12; display:flex; justify-content:flex-end;">
+        <div class="full-row actions">
           <button class="btn" type="submit">Evaluate Alerts</button>
         </div>
       </form>
 
       {% if alerts_results %}
-        <div style="margin-top:16px;">
+        <div class="top-gap-lg">
           {% for a in alerts_results["alerts"] %}
             <div class="alert {{ a.severity }}">
               <h4>{{ a.title }}</h4>
@@ -448,9 +663,9 @@
           {% endfor %}
         </div>
 
-        <div class="grid" style="margin-top:12px;">
-          <div style="grid-column: span 12;">
-            <h3 class="muted" style="margin:0 0 8px 0;">Alert Inputs</h3>
+        <div class="grid top-gap-sm">
+          <div class="full-row">
+            <h3 class="card-subtitle muted">Alert Inputs</h3>
             <table>
               <thead><tr><th>Field</th><th>Value</th></tr></thead>
               <tbody>
@@ -460,8 +675,8 @@
               </tbody>
             </table>
           </div>
-          <div style="grid-column: span 12; margin-top:12px;">
-            <h3 class="muted" style="margin:0 0 8px 0;">Computed</h3>
+          <div class="full-row top-gap-sm">
+            <h3 class="card-subtitle muted">Computed</h3>
             <table>
               <thead><tr><th>Metric</th><th>Value</th></tr></thead>
               <tbody>
