@@ -9,6 +9,7 @@ import { runSyncCycle } from '@/sync/useSyncBootstrap';
 import { useTheme } from '@/theme';
 import { apiClient } from '@/services/api/client';
 import { useAuthStore } from '@/store/authStore';
+import { seedExampleFiveFiveChf } from '@/dev/seed';
 
 export default function SettingsScreen() {
   const theme = useTheme();
@@ -137,6 +138,9 @@ export default function SettingsScreen() {
         {exportPath ? <Text style={{ color: theme.colors.muted }}>Saved to {exportPath}</Text> : null}
         <Pressable accessibilityRole="button" style={styles.exportButton} onPress={handleSyncNow}>
           <Text style={{ color: theme.colors.primary, fontWeight: '600' }}>Sync now</Text>
+        </Pressable>
+        <Pressable accessibilityRole="button" style={styles.exportButton} onPress={seedExampleFiveFiveChf}>
+          <Text style={{ color: theme.colors.primary, fontWeight: '600' }}>Seed example 5/5 CHF sessions</Text>
         </Pressable>
         <Pressable
           accessibilityRole="button"

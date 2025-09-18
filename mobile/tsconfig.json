@@ -45,6 +45,10 @@
       "@/shared/*": [
         "src/shared/*"
       ]
+    ,
+      "@/dev/*": [
+        "src/dev/*"
+      ]
     },
     "types": [
       "jest",

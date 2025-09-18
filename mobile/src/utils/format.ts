@@ -1,9 +1,26 @@
 import dayjs from '@/utils/dayjs';
+import { useSettingsStore } from '@/store/settingsStore';
 
-export function formatCurrency(cents: number, currency = 'USD') {
+function resolveCurrency(preferred?: string): string {
+  const fallback = 'USD';
+  const normalized = (preferred ?? useSettingsStore.getState().currency ?? fallback)
+    .toString()
+    .trim()
+    .toUpperCase();
+  try {
+    // Validate currency; will throw RangeError if invalid
+    new Intl.NumberFormat(undefined, { style: 'currency', currency: normalized }).format(0);
+    return normalized;
+  } catch {
+    return fallback;
+  }
+}
+
+export function formatCurrency(cents: number, currency?: string) {
+  const appCurrency = resolveCurrency(currency);
   return Intl.NumberFormat(undefined, {
     style: 'currency',
-    currency,
+    currency: appCurrency,
     maximumFractionDigits: 2
   }).format(cents / 100);
 }
